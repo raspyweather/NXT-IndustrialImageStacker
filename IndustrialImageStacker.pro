@@ -2,8 +2,10 @@ TARGET = IndustrialImageStacker
 CONFIG += c++14
 QT += core widgets gui dbus
 
-SOURCES += myapp.cpp myvision.cpp myengine.cpp main.cpp
-HEADERS += myapp.h myvision.h myengine.h
+SOURCES += myapp.cpp myvision.cpp myengine.cpp main.cpp \
+    customresultimage.cpp
+HEADERS += myapp.h myvision.h myengine.h \
+    customresultimage.h
 DEFINES += 
 DISTFILES += license.txt qtlogging.ini
 

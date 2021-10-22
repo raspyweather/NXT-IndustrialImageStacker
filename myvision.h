@@ -1,7 +1,10 @@
 #pragma once
 
+#include <QImage>
+
 // Include framework headers
 #include <vision.h>
+
 
 /**
  * @brief The app-specific vision object
@@ -25,4 +28,11 @@ public:
      * @brief Abort the image processing
      */
     void abort() override;
+
+    /**
+     * @brief Getter for the result image
+     */
+    QImage getResultImage() const;
+private:
+    QImage _resultImage;
 };

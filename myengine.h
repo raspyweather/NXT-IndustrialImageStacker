@@ -6,7 +6,7 @@
 // Include framework headers
 #include <engine.h>
 #include <resultsourcecollection.h>
-
+#include "customresultimage.h"
 /**
  * @brief The app-specific engine
  */
@@ -63,4 +63,11 @@ private:
      */
     IDS::NXT::ResultSourceCollection& _resultcollection;
 
+    /**
+     * @brief Result image
+     *
+     * This image is displayed separately in the NXT Cockpit
+     * In this example we will use the result image to display the ROI image
+     */
+    CustomResultImage _resultImage;
 };

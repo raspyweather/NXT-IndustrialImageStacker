@@ -9,6 +9,7 @@
 
 MyEngine::MyEngine(IDS::NXT::ResultSourceCollection& resultcollection)
     : _resultcollection{resultcollection}
+    , _resultImage { "default" }
 {
 }
 
@@ -32,6 +33,10 @@ void MyEngine::handleResult(std::shared_ptr<IDS::NXT::Vision> vision)
 {
     // Get the finished vision object
     auto obj = std::static_pointer_cast<MyVision>(vision);
+
+    // #RESULT_IMAGE
+    // Get the result image
+    _resultImage.setImage(obj->getResultImage(), obj->image());
 
     // Fill ResultSources of the collection
     _resultcollection.addResult("visionduration",QString::number(obj->timeNeeded()),"resultPart",vision->image());
