@@ -1,0 +1,24 @@
+{
+    "Name": "industrialimagestacker",
+    "Manufacturer": "",
+    "Version": "0.1.0",
+    "Type": "VApp",
+    "Language":
+    {
+        "Title":
+        {
+            "en": "IndustrialImageStacker",
+            "de": "IndustrialImageStacker"
+        },
+        "Brief":
+        {
+            "en": "",
+            "de": ""
+        },
+        "Description":
+        {
+            "en": "",
+            "de": ""
+        }
+    }
+}
