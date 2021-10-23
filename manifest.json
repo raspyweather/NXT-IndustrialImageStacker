@@ -1,14 +1,14 @@
 {
-    "Name": "industrialimagestacker",
+    "Name": "stack",
     "Manufacturer": "",
-    "Version": "0.1.0",
+    "Version": "0.0.1",
     "Type": "VApp",
     "Language":
     {
         "Title":
         {
-            "en": "IndustrialImageStacker",
-            "de": "IndustrialImageStacker"
+            "en": "stack",
+            "de": "stack"
         },
         "Brief":
         {
