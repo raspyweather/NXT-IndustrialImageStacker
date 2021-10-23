@@ -11,13 +11,13 @@
 #include "action.h"
 #include "configurablebool.h"
 #include "configurableint64.h"
+#include "myresultimage.h"
 
 #include <QLoggingCategory>
 #include <QTimer>
 
 #include <camera.h>
 
-#include <myresultimage.h>
 
 /**
  * @brief The app-specific app object
