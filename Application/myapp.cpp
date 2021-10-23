@@ -14,6 +14,7 @@ MyApp::MyApp(int& argc, char** argv)
   , _enablemin{"enablemin", true}
   , _enablemax{"enablemax", true}
   , _reset("reset")
+  , _imageBufferSize(0)
   , _resultmaximage("resultmaximage")
   , _resultminimage("resultminimage")
 {
@@ -30,6 +31,7 @@ MyApp::MyApp(int& argc, char** argv)
 
     connect(&_timer, &QTimer::timeout, this, &MyApp::triggerImage);
     connect(&_imageSlider, &IDS::NXT::ConfigurableInt64::changed, this, &MyApp::timerChanged);
+    connect(&_reset, &IDS::NXT::Action::executionDemanded, this, &MyApp::resetImageBuffers);
     timerChanged(_imageSlider);
 }
 
@@ -41,12 +43,12 @@ void MyApp::imageAvailable(std::shared_ptr<IDS::NXT::Hardware::Image> image) {
 
     if (!_maxImageBuffer) {
         qCDebug(lc) << "Image Size" << size;
-
+        _imageBufferSize = size;
         _maxImageBuffer = std::make_unique<uint8_t[]>(size);
     }
     if (!_minImageBuffer) {
         qCDebug(lc) << "Image Size" << size;
-
+        _imageBufferSize = size;
         _minImageBuffer = std::make_unique<uint8_t[]>(size);
     }
 
@@ -84,4 +86,17 @@ void MyApp::timerChanged(qint64 value) {
 
 void MyApp::triggerImage() {
     IDS::NXT::Hardware::Trigger::getInstance().trigger();
+}
+
+void MyApp::resetImageBuffers(){
+    if (_maxImageBuffer){
+        for (size_t i = 0; i<_imageBufferSize;i++){
+            _maxImageBuffer[i] = 0;
+        }
+    }
+    if (_minImageBuffer){
+        for (size_t i = 0; i<_imageBufferSize;i++){
+            _minImageBuffer[i] = 255;
+        }
+    }
 }

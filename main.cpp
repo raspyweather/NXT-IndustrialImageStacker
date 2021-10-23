@@ -4,7 +4,7 @@
 #include <systemsignals.h>
 
 // Include local header files
-#include "myapp.h"
+#include "Application/myapp.h"
 
 static QLoggingCategory lc{"stack"};
 
