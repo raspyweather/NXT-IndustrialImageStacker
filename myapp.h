@@ -1,11 +1,23 @@
-#pragma once
+#ifndef MYAPP_H
+#define MYAPP_H
 
 // Include framework headers
-#include <vapp.h>
 #include <resultsourcecollection.h>
+#include <vapp.h>
 
 // Include own headers
 #include "myengine.h"
+
+#include "action.h"
+#include "configurablebool.h"
+#include "configurableint64.h"
+
+#include <QLoggingCategory>
+#include <QTimer>
+
+#include <camera.h>
+
+#include <myresultimage.h>
 
 /**
  * @brief The app-specific app object
@@ -14,8 +26,7 @@
  * functionality, such as listing in the REST-Interface / GUI and, probably most importantly allows the
  * usage of interaction elements such as actions, configurables etc.
  */
-class MyApp : public IDS::NXT::VApp
-{
+class MyApp : public IDS::NXT::VApp {
     // This Qt macro is needed for the signal/slot mechanism
     Q_OBJECT
 
@@ -25,7 +36,7 @@ public:
      * @param argc count of command line arguments
      * @param argv list of command line arguments
      */
-    MyApp(int &argc, char **argv);
+    MyApp(int& argc, char** argv);
 
 protected slots:
     /**
@@ -48,13 +59,32 @@ protected slots:
      */
     void abortVision() override;
 
+private slots:
+
+    void timerChanged(qint64 value);
+
+    void triggerImage();
+
 private:
     /**
      * @brief Collection of results
      *
-     * This object stores all results of the image processing.
+     * This object stores all results of the image processing. It is held as a shared pointer as it needs to be
+     * used in any engine available.
      */
     IDS::NXT::ResultSourceCollection _resultcollection;
 
     MyEngine _engine;
+
+    IDS::NXT::ConfigurableInt64 _imageSlider;
+    IDS::NXT::ConfigurableBool _drawresult;
+    IDS::NXT::Action _reset;
+
+    QTimer _timer;
+
+    std::unique_ptr<uint8_t[]> _tmpMemory;
+
+    MyResultImage _resultimage;
 };
+
+#endif // MYAPP_H

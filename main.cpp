@@ -6,8 +6,7 @@
 // Include local header files
 #include "myapp.h"
 
-// to enable/disable specific log messages edit qtlogging.ini
-static QLoggingCategory lc {"myvapp"};
+static QLoggingCategory lc{"stack"};
 
 /**
  * @brief Serves as the main entry point for our program
@@ -15,16 +14,15 @@ static QLoggingCategory lc {"myvapp"};
  * @param argv list of command line arguments
  * @return Exit success
  */
-int main(int argc, char *argv[])
-{
-    // Close VApp gently. This function outputs better notifications when the program crashes
-    IDS::Utils::catchSignalsAndQuit({SIGQUIT, SIGINT, SIGTERM, SIGHUP});
+int main(int argc, char* argv[]) {
+    // This function outputs better notifications when the program crashes
+    IDS::Utils::watchForSignals();
 
     // Create the app object
     MyApp app{argc, argv};
 
     // Log that the app runs now
-    qCInfo(lc) << "Up and running.";
+    qInfo(lc) << "Up and running.";
 
     // Actually start the app. This line will not return until the app object terminates
     return app.exec();

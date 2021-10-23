@@ -1,11 +1,9 @@
-TARGET = IndustrialImageStacker
+TARGET = stack
 CONFIG += c++14
 QT += core widgets gui dbus
 
-SOURCES += myapp.cpp myvision.cpp myengine.cpp main.cpp \
-    customresultimage.cpp
-HEADERS += myapp.h myvision.h myengine.h \
-    customresultimage.h
+SOURCES += myapp.cpp myvision.cpp myengine.cpp main.cpp myresultimage.cpp customresultimage.cpp
+HEADERS += myapp.h myvision.h myengine.h myresultimage.h customresultimage.h
 DEFINES += 
 DISTFILES += license.txt qtlogging.ini
 
@@ -16,5 +14,12 @@ TRANSLATION = translation.json
 LICENSE = license.txt
 
 DEPLOYFILES += $$PWD/qtlogging.ini
+
+
+QMAKE_CFLAGS += ${QMAKE_CFLAGS} -mtune=cortex-a53 -march=armv8-a+simd
+QMAKE_CXXFLAGS += ${QMAKE_CXXFLAGS} -mtune=cortex-a53 -march=armv8-a+simd
+
+
+
 
 include($(NXT_FRAMEWORK)/qmake/nxt_rio.pri)

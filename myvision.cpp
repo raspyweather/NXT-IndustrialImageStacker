@@ -2,25 +2,18 @@
 #include "myvision.h"
 
 // Include Qt headers
+#include <QDateTime>
 #include <QImage>
 
-void MyVision::process()
-{
-    auto img = image();
+// static QLoggingCategory lc{"stack.MyVision"};
 
-    // do something
-    _resultImage = img->getQImage().copy();
+void MyVision::process() {
+    auto img = image();
 
     img->visionOK("", "");
 }
 
-void MyVision::abort()
-{
+void MyVision::abort() {
     // Call the base class
     Vision::abort();
-}
-
-QImage MyVision::getResultImage() const
-{
-    return _resultImage;
 }
