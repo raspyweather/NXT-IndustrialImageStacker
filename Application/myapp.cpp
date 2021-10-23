@@ -1,8 +1,8 @@
 #include "myapp.h"
 
-#include <arm_neon.h>
 #include <trigger.h>
 #include <triggertype.h>
+#include <ImageFilters/imagefilters.h>
 
 static QLoggingCategory lc{"stack.myapp"};
 
@@ -38,16 +38,7 @@ void MyApp::imageAvailable(std::shared_ptr<IDS::NXT::Hardware::Image> image) {
         _tmpMemory = std::make_unique<uint8_t[]>(size);
     }
 
-    auto tmpMemoryPtr = _tmpMemory.get();
-    for (int i = 0; i < size; i += 16) {
-        auto loader = vld1q_u8(imagePtr + i);
-
-        auto loader2 = vld1q_u8(tmpMemoryPtr + i);
-
-        auto max = vmaxq_u8(loader, loader2);
-
-        vst1q_u8(tmpMemoryPtr + i, max);
-    }
+    ImageFilters::max(_tmpMemory.get(), imagePtr, _tmpMemory.get(), size);
 
     // qCDebug(lc) << "MaxValues" << result[0] << imagePtr[0] << imagePtr[256];
 
