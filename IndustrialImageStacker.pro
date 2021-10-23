@@ -2,8 +2,21 @@ TARGET = stack
 CONFIG += c++14
 QT += core widgets gui dbus
 
-SOURCES += myapp.cpp myvision.cpp myengine.cpp main.cpp myresultimage.cpp customresultimage.cpp
-HEADERS += myapp.h myvision.h myengine.h myresultimage.h customresultimage.h
+SOURCES += \
+    Application/myapp.cpp \
+    Application/myvision.cpp \
+    Application/myengine.cpp \
+    Application/myresultimage.cpp \
+    Application/customresultimage.cpp \
+    ImageFilters/imagefilters.cpp \
+    main.cpp
+HEADERS += \
+    Application/myapp.h \
+    Application/myvision.h \
+    Application/myengine.h \
+    Application/myresultimage.h \
+    Application/customresultimage.h \
+    ImageFilters/imagefilters.h
 DEFINES += 
 DISTFILES += license.txt qtlogging.ini
 
