@@ -11,13 +11,20 @@ MyApp::MyApp(int& argc, char** argv)
   , _engine{_resultcollection}
   , _imageSlider{"intervall", 100}
   , _drawresult{"drawresult", false}
-  , _resultimage("myresultimage")
-  , _reset("reset") {
+  , _enablemin{"enablemin", true}
+  , _enablemax{"enablemax", true}
+  , _reset("reset")
+  , _resultmaximage("resultmaximage")
+  , _resultminimage("resultminimage")
+{
     // at this point all result sources must be created.
     _resultcollection.createSource("visionduration", IDS::NXT::ResultType::String);
 
     _imageSlider.setRange(0, 5000);
     _imageSlider.setUnit(IDS::NXT::Unit::Milliseconds);
+
+    _resultmaximage.setTitle("max");
+    _resultminimage.setTitle("min");
 
     IDS::NXT::Hardware::Trigger::getInstance().setTriggerType(IDS::NXT::TriggerType::Software);
 
@@ -32,19 +39,31 @@ void MyApp::imageAvailable(std::shared_ptr<IDS::NXT::Hardware::Image> image) {
     const auto imagePtr = reinterpret_cast<uint8_t*>(image->buffer());
     auto size = image->size();
 
-    if (!_tmpMemory) {
+    if (!_maxImageBuffer) {
         qCDebug(lc) << "Image Size" << size;
 
-        _tmpMemory = std::make_unique<uint8_t[]>(size);
+        _maxImageBuffer = std::make_unique<uint8_t[]>(size);
+    }
+    if (!_minImageBuffer) {
+        qCDebug(lc) << "Image Size" << size;
+
+        _minImageBuffer = std::make_unique<uint8_t[]>(size);
     }
 
-    ImageFilters::max(_tmpMemory.get(), imagePtr, _tmpMemory.get(), size);
+    if (_enablemax){
+        ImageFilters::max(_maxImageBuffer.get(), imagePtr, _maxImageBuffer.get(), size);
+    }
+    if (_enablemin){
+        ImageFilters::min(_minImageBuffer.get(), imagePtr, _minImageBuffer.get(), size);
+    }
 
-    // qCDebug(lc) << "MaxValues" << result[0] << imagePtr[0] << imagePtr[256];
-
-    if (_drawresult) {
-        QImage myImage(_tmpMemory.get(), image->width(), image->height(), QImage::Format_RGB888);
-        _resultimage.setImage(myImage, image);
+    if (_drawresult && _enablemax) {
+        QImage myImage(_maxImageBuffer.get(), image->width(), image->height(), QImage::Format_RGB888);
+        _resultmaximage.setImage(myImage, image);
+    }
+    if (_drawresult && _enablemin) {
+        QImage myImage(_minImageBuffer.get(), image->width(), image->height(), QImage::Format_RGB888);
+        _resultminimage.setImage(myImage, image);
     }
 }
 
