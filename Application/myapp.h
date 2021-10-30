@@ -65,6 +65,8 @@ private slots:
 
     void triggerImage();
 
+    void resetImageBuffers();
+
 private:
     /**
      * @brief Collection of results
@@ -87,6 +89,7 @@ private:
 
     std::unique_ptr<uint8_t[]> _maxImageBuffer;
     std::unique_ptr<uint8_t[]> _minImageBuffer;
+    size_t _imageBufferSize;
 
     MyResultImage _resultmaximage;
     MyResultImage _resultminimage;
