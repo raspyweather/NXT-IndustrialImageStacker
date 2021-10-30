@@ -78,13 +78,18 @@ private:
 
     IDS::NXT::ConfigurableInt64 _imageSlider;
     IDS::NXT::ConfigurableBool _drawresult;
+    IDS::NXT::ConfigurableBool _enablemin;
+    IDS::NXT::ConfigurableBool _enablemax;
+
     IDS::NXT::Action _reset;
 
     QTimer _timer;
 
-    std::unique_ptr<uint8_t[]> _tmpMemory;
+    std::unique_ptr<uint8_t[]> _maxImageBuffer;
+    std::unique_ptr<uint8_t[]> _minImageBuffer;
 
-    MyResultImage _resultimage;
+    MyResultImage _resultmaximage;
+    MyResultImage _resultminimage;
 };
 
 #endif // MYAPP_H
